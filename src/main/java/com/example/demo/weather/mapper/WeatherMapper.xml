@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.weather.mapper.WeatherMapper">
+
+	<select id="validateCountryAndCity" resultType ="Integer">
+		SELECT COUNT(1) FROM CITY ct
+		INNER JOIN COUNTRY ctry ON ct.country_id = ctry.id
+		WHERE ct.code = #{city} AND ctry.code = #{country}
+	</select>
+	
+	<select id="getWeather" resultType ="com.example.demo.weather.model.WeatherDetails">
+		SELECT * FROM WEATHER_BASIC_INFO wt
+		INNER JOIN CITY ct ON wt.city_id = ct.id
+		INNER JOIN COUNTRY ctry ON ctry.id = ct.country_id
+		WHERE ctry.code = #{country} AND ct.code = #{city} 
+	</select>
+
+	<select id="getWeatherBreakdownList" resultType ="com.example.demo.weather.model.WeatherBreakDownDetails">
+		SELECT * FROM WEATHER_BREAKDOWN_DETAILS where weather_id  = #{weatherId}
+	</select>
+	
+</mapper>
